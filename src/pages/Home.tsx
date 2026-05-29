@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <div className="bg-[#050816] min-h-screen relative overflow-hidden">
+    <div className="bg-[#050816] min-h-screen pt-20 relative overflow-hidden">
       <div className="accent-glow top-[-200px] right-[-100px]"></div>
       <div className="accent-glow bottom-[-200px] left-[-200px]"></div>
       <div className="absolute inset-0 grid-lines pointer-events-none"></div>

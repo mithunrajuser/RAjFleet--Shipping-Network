@@ -1,6 +1,6 @@
 export default function Vision() {
   return (
-    <div className="bg-[#050816] min-h-screen py-24 px-8 pt-32">
+    <div className="bg-[#050816] min-h-screen py-24 px-8 pt-28">
       <div className="max-w-4xl mx-auto space-y-16">
         <header className="text-center">
             <h1 className="text-6xl font-bold mb-6 text-gradient">Our Vision</h1>

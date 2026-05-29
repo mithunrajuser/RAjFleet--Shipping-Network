@@ -10,10 +10,11 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="max-w-7xl mx-auto px-6 md:px-8 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#1565FF] rounded-sm flex items-center justify-center">
-            <span className="text-xs font-bold">RF</span>
-          </div>
-          <span className="text-xl font-bold tracking-tighter uppercase">RAj<span className="text-[#1565FF]">Fleet</span></span>
+          <img src="https://mithunraj.com/wp-content/uploads/2026/05/RAjFleet-logo.png" alt="RAjFleet" className="h-10" />
+          <span className="text-xl font-bold tracking-tighter">
+            <span className="text-[#1565FF]">RAj</span>
+            <span className="text-white"> Fleet</span>
+          </span>
         </Link>
         <div className="hidden md:flex gap-6 text-[11px] font-semibold uppercase tracking-widest text-[#AFC7FF]/80">
           {['Home', 'Vision', 'Technology', 'Contact'].map((item) => (
@@ -25,17 +26,15 @@ export default function Header() {
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X /> : <Menu />}
         </button>
-        <motion.button 
-          className="hidden md:block px-5 py-2 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-        >
-          Coming Soon
-        </motion.button>
+        <Link to="/app" className="hidden md:block px-5 py-2 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+          Download App
+        </Link>
       </nav>
       <AnimatePresence>
         {isOpen && (
             <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="md:hidden glass overflow-hidden">
                 <div className="flex flex-col p-6 gap-4 text-[11px] font-semibold uppercase tracking-widest text-[#AFC7FF]/80">
-                    {['Home', 'Vision', 'Technology', 'Contact'].map((item) => (
+                    {['Home', 'Vision', 'Technology', 'Contact', 'App'].map((item) => (
                         <Link key={item} to={item === 'Home' ? '/' : `/${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="hover:text-white transition-colors">
                         {item}
                         </Link>

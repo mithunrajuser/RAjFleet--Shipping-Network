@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Vision from './pages/Vision';
 import Technology from './pages/Technology';
 import Contact from './pages/Contact';
+import AppExperience from './pages/AppExperience';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
             <Route path="/vision" element={<Vision />} />
             <Route path="/technology" element={<Technology />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/app" element={<AppExperience />} />
           </Routes>
         </main>
         <Footer />

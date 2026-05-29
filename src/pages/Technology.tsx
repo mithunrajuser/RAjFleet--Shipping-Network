@@ -1,6 +1,6 @@
 export default function Technology() {
   return (
-    <div className="bg-[#050816] min-h-screen py-24 px-8 pt-32">
+    <div className="bg-[#050816] min-h-screen py-24 px-8 pt-28">
       <div className="max-w-7xl mx-auto space-y-16">
         <header className="text-center">
             <h1 className="text-6xl font-bold mb-6 text-gradient">Technology</h1>
