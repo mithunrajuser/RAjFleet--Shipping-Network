@@ -1,6 +1,8 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
+import nodemailer from 'nodemailer';
+import 'dotenv/config';
 
 async function startServer() {
   const app = express();
@@ -11,9 +13,38 @@ async function startServer() {
   // API routes
   app.post("/api/contact", async (req, res) => {
     const { name, email, message } = req.body;
-    console.log("Contact form submission:", { name, email, message });
-    // TODO: Actually send email
-    res.json({ success: true, message: "Message received." });
+    
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
+    try {
+      if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+        throw new Error("SMTP configuration missing");
+      }
+
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: Number(process.env.SMTP_PORT || 465),
+        secure: true,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+
+      await transporter.sendMail({
+        from: `RAjFleet <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+        to: "hello@rajhomeindia.com",
+        subject: "New Contact Request – RAjFleet Website",
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\nSubmitted At: ${new Date().toLocaleString()}`,
+      });
+
+      res.json({ success: true, message: "Thank you. Your message has been received." });
+    } catch (error) {
+      console.error("Email error:", error);
+      res.status(500).json({ success: false, message: "Unable to send message right now. Please try again later." });
+    }
   });
 
   // Vite middleware for development

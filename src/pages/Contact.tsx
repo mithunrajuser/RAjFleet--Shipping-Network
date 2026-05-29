@@ -1,11 +1,14 @@
 import { useState } from 'react';
 
 export default function Contact() {
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus('Submitting...');
+    setSubmitting(true);
+    setStatus('Sending...');
+
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     
@@ -15,14 +18,18 @@ export default function Contact() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
         });
+        const result = await response.json();
+        
         if (response.ok) {
-            setStatus('Message sent successfully!');
+            setStatus('Message Sent ✓');
             e.currentTarget.reset();
         } else {
-            setStatus('Error sending message.');
+            setStatus(result.message || 'Unable to send message right now. Please try again later.');
         }
     } catch {
-        setStatus('Error sending message.');
+        setStatus('Unable to send message right now. Please try again later.');
+    } finally {
+        setSubmitting(false);
     }
   };
 
@@ -45,8 +52,10 @@ export default function Contact() {
                 <input required name="name" type="text" placeholder="Name" className="w-full p-4 glass rounded-lg text-white" />
                 <input required name="email" type="email" placeholder="Email" className="w-full p-4 glass rounded-lg text-white" />
                 <textarea required name="message" placeholder="Message" className="w-full p-4 glass rounded-lg h-32 text-white"></textarea>
-                <button type="submit" className="w-full p-4 bg-[#1565FF] rounded-lg font-bold text-white hover:bg-blue-600 transition">Submit</button>
-                {status && <p className="text-center mt-4 text-white/80">{status}</p>}
+                <button type="submit" disabled={submitting} className="w-full p-4 bg-[#1565FF] rounded-lg font-bold text-white hover:bg-blue-600 transition disabled:opacity-50">
+                    {submitting ? 'Sending...' : status === 'Message Sent ✓' ? 'Message Sent ✓' : 'Submit'}
+                </button>
+                {status && <p className={`text-center mt-4 ${status.includes('✓') ? 'text-green-500' : 'text-red-500'}`}>{status}</p>}
             </form>
         </div>
       </div>
