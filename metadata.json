@@ -1,0 +1,6 @@
+{
+  "name": "RAjFleet",
+  "description": "A technology-driven logistics network connecting local commerce with intelligent delivery infrastructure.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
